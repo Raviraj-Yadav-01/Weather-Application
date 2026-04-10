@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/app_routes/app_routes.dart';
+import 'package:weather_app/core/routers/app_routes_configuration.dart';
 
 
 void main() {
@@ -11,13 +11,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
-      initialRoute: AppRoutes.splash,
-      routes: AppRoutes.mRoutes,
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: MyRoutesApp().router,
     );
   }
 }

@@ -1,6 +1,8 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:weather_app/core/routers/app_routes_constant.dart';
 
 class SignUpPage extends StatefulWidget{
   const SignUpPage({super.key});
@@ -36,6 +38,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 Text("Create Account", style: TextStyle(color:Colors.white,fontSize: 34, fontWeight: FontWeight.bold)),
                 SizedBox(height: 11),
 
+                ///Name
                 TextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -90,6 +93,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 SizedBox(height: 11),
 
+                ///Mobile Number
                 TextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -117,6 +121,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 SizedBox(height: 11),
 
+               //password
                TextFormField(
                       validator: (value) {
                         final bool passwordValid = RegExp(
@@ -146,6 +151,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                 SizedBox(height: 11),
 
+                ///confirm Password
                 TextFormField(
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -171,13 +177,17 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                 SizedBox(height: 11),
 
+                ///
                 SizedBox(
                   width:double.infinity,
-                    child: ElevatedButton(onPressed: (){}, child: Text("Sign Up"))),
+                    child: ElevatedButton(onPressed: (){
+                      GoRouter.of(context).pushNamed(MyAppConstants.loginRoute);
+                    }, child: Text("Sign Up"))),
 
+                ///Text Button
                 TextButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, "/login");
+                    GoRouter.of(context).pushNamed(MyAppConstants.loginRoute);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

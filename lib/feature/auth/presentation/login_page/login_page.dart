@@ -1,7 +1,8 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:weather_app/app_routes/app_routes.dart';
+import 'package:go_router/go_router.dart';
+import 'package:weather_app/core/routers/app_routes_constant.dart';
 
 class LoginPage extends StatefulWidget{
   const LoginPage({super.key});
@@ -90,14 +91,17 @@ class _LoginPageState extends State<LoginPage> {
                 height:11
               ),
 
+              //Login Button
               SizedBox(
                 width:double.infinity,
                   child: ElevatedButton(onPressed: (){},child:Text("Log In"))),
               SizedBox(height:11),
 
+
+              ///Text Button
               TextButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, AppRoutes.signup);
+                  GoRouter.of(context).pushNamed(MyAppConstants.signupRoute);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
