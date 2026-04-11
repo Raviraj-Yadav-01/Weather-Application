@@ -6,6 +6,7 @@ import 'package:weather_app/feature/auth/data/model/user_moder.dart';
 
 class AuthController extends GetxController {
 
+  //privately declare
   final DBHelper _dbHelper = DBHelper.getInstance();
 
   // Loading
@@ -20,7 +21,7 @@ class AuthController extends GetxController {
   Function(bool success)? onLoginResult;
   Function(bool success)? onSignupResult;
 
-  // ─── LOGIN ───────────────────────────
+  //LOGIN
   Future<void> loginUser({
     required String email,
     required String password,
@@ -37,10 +38,10 @@ class AuthController extends GetxController {
 
       switch (result) {
         case 1:
-          onResult(true); // ✅ Login success - GoRouter navigate karega
+          onResult(true); // Login success
           break;
         case 2:
-          loginError.value = 'Email registered nahi hai!';
+          loginError.value = 'Email not registered ';
           onResult(false);
           break;
         case 3:
@@ -48,7 +49,7 @@ class AuthController extends GetxController {
           onResult(false);
           break;
         default:
-          loginError.value = 'Kuch galat hua!';
+          loginError.value = 'something went to Wrong';
           onResult(false);
       }
     } catch (e) {
@@ -59,7 +60,7 @@ class AuthController extends GetxController {
     }
   }
 
-  // ─── SIGNUP ──────────────────────────
+  //Signup
   Future<void> signupUser({required String name, required String email, required String mobNo, required String password, required Function(bool success) onResult}) async {
     try {
       isSignupLoading.value = true;
@@ -71,14 +72,14 @@ class AuthController extends GetxController {
 
       switch (result) {
         case 3:
-          onResult(true);       //// Signup success
+          onResult(true);       /// Signup success
           break;
         case 2:
-          signupError.value = 'Email pehle se hi registered hai';
+          signupError.value = 'email Already registered';
           onResult(false);
           break;
         case 1:
-          signupError.value = 'Kuch galat hua';
+          signupError.value = 'Something wrong';
           onResult(false);
           break;
       }

@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFFE3F2FD),
       body:Padding(
         padding: const EdgeInsets.all(8.0),
         child: Form(
@@ -112,7 +112,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               )),
               SizedBox(height:11),
-
 
               ///Text Button
               TextButton(

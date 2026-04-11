@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
@@ -8,12 +6,14 @@ import 'package:go_router/go_router.dart';
 import 'package:weather_app/core/routers/app_routes_constant.dart';
 import 'package:weather_app/feature/auth/controllers/auth_controller.dart';
 
+
 class SignUpPage extends StatefulWidget{
   const SignUpPage({super.key});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
+
 
 class _SignUpPageState extends State<SignUpPage> {
 
@@ -30,7 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black38,
+      backgroundColor: Color(0xFFE3F2FD),
       body: Form(
         key: formkey,
         child: Padding(
@@ -190,7 +190,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 }),
                 SizedBox(height: 8),
 
-                ///
+                ///Signup Button
                 Obx(() => SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(

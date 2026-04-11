@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:weather_app/core/routers/app_routes_constant.dart';
 import 'package:weather_app/feature/auth/presentation/login_page/login_page.dart';
 import 'package:weather_app/feature/auth/presentation/signup_page/signup_page.dart';
-import 'package:weather_app/feature/weather/presentation/dashboard/dashboard_nav_pages/home_page.dart';
-import 'package:weather_app/feature/weather/presentation/splash_page/splash_page.dart';
+import 'package:weather_app/feature/auth/presentation/splash_page/splash_page.dart';
+import 'package:weather_app/feature/weather/presentation/home_page/home_page.dart';
 
 class MyRoutesApp{
 

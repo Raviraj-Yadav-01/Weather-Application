@@ -1,10 +1,10 @@
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/core/constants/app_constants.dart';
 import 'package:weather_app/core/routers/app_routes_constant.dart';
+
 
 class SplashPage extends StatefulWidget{
   const SplashPage({super.key});
@@ -13,8 +13,6 @@ class SplashPage extends StatefulWidget{
 }
 
 class _SplashPageState extends State<SplashPage> {
-
-
    @override
   void initState() {
     super.initState();
@@ -44,6 +42,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color(0xFFE3F2FD),
       body: Center(
         child: Column(
           mainAxisAlignment:MainAxisAlignment.center,
