@@ -18,7 +18,7 @@ class DBHelper{
   Database? myDatabase;
 
   Future<Database> initDB()async{
-    myDatabase ?? await openDB();
+    myDatabase ??= await openDB();
     return myDatabase!;
   }
 
@@ -26,17 +26,18 @@ class DBHelper{
   Future<Database> openDB()async{
 
     Directory appDocDir = await getApplicationDocumentsDirectory();
-
     String dbPath = join(appDocDir.path,AppConstants.dbName);
 
     return await openDatabase(dbPath, version:1, onCreate: (db, version){
 
-      db.execute("create table ${AppConstants.userTable}("
-          "${AppConstants.userId}integer primary key autoincrement ,"
-          "${AppConstants.userName}text,"
-          "${AppConstants.userEmail}text,"
-          "${AppConstants.userMobileNumber}text,"
-          "${AppConstants.userPassword}text,"
+      db.execute(
+              "CREATE TABLE ${AppConstants.userTable}("
+              "${AppConstants.userId} INTEGER PRIMARY KEY AUTOINCREMENT,"
+              "${AppConstants.userName} TEXT,"
+              "${AppConstants.userEmail} TEXT,"
+              "${AppConstants.userMobileNumber} TEXT,"
+              "${AppConstants.userPassword} TEXT"
+              ")"
       );
     });
   }
