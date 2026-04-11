@@ -1,7 +1,5 @@
-
-
-
 import 'package:weather_app/core/constants/app_constants.dart';
+
 
 class  UserModel{
 
@@ -10,7 +8,6 @@ class  UserModel{
   String email;
   String mobNo;
   String? pass;
-
 
   UserModel({
     this.id,

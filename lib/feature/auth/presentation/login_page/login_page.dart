@@ -1,27 +1,31 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:weather_app/core/routers/app_routes_constant.dart';
+import 'package:weather_app/feature/auth/controllers/auth_controller.dart';
+
+
 
 class LoginPage extends StatefulWidget{
   const LoginPage({super.key});
-
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final AuthController controller = Get.find<AuthController>();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
 
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFFE3F2FD),
       body:Padding(
         padding: const EdgeInsets.all(8.0),
         child: Form(
@@ -30,12 +34,11 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children:[
 
+              ////Email field
               TextFormField(
                 onChanged: (value) {},
                 validator: (value) {
-                  final bool emailValid = RegExp(
-                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                  ).hasMatch(value ?? "");
+                  final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+",).hasMatch(value ?? "");
 
                   if (value == null || value.isEmpty) {
                     return "please enter your email";
@@ -45,9 +48,10 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   }
                 },
+
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   hintText: "Enter your email...",
                   hintStyle: TextStyle(color: Colors.white),
@@ -62,9 +66,7 @@ class _LoginPageState extends State<LoginPage> {
 
               TextFormField(
                 validator: (value) {
-                  final bool passwordValid = RegExp(
-                    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
-                  ).hasMatch(value ?? "");
+                  final bool passwordValid = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',).hasMatch(value ?? "");
 
                   if (value == null || value.isEmpty) {
                     return "please enter your password";
@@ -76,27 +78,40 @@ class _LoginPageState extends State<LoginPage> {
                 },
 
                 controller: passwordController,
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   hintText: "Enter your password here...",
                   hintStyle: TextStyle(color: Colors.white),
                   labelText: "Password",
                   labelStyle: TextStyle(color: Colors.white),
-                    border:OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(17)
-                    )
+                    border:OutlineInputBorder(borderRadius: BorderRadius.circular(17))
                 ),
               ),
-              SizedBox(
-                height:11
-              ),
-
-              //Login Button
-              SizedBox(
-                width:double.infinity,
-                  child: ElevatedButton(onPressed: (){},child:Text("Log In"))),
               SizedBox(height:11),
 
+              //Login Button
+              Obx(() => SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: controller.isLoginLoading.value ? null : () {
+                    if (formkey.currentState!.validate()) {
+                      controller.loginUser(
+                        email: emailController.text.trim(),
+                        password: passwordController.text.trim(),
+                        onResult: (success) {
+                          if (success) {
+                            GoRouter.of(context).goNamed(MyAppConstants.homeRoute);
+                          }
+                        },
+                      );
+                    }
+                  },
+                  child: controller.isLoginLoading.value
+                      ? CircularProgressIndicator(color: Colors.white)
+                      : Text("Log In"),
+                ),
+              )),
+              SizedBox(height:11),
 
               ///Text Button
               TextButton(

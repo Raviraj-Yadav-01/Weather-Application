@@ -1,8 +1,11 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:weather_app/core/routers/app_routes_constant.dart';
+import 'package:weather_app/feature/auth/controllers/auth_controller.dart';
+
 
 class SignUpPage extends StatefulWidget{
   const SignUpPage({super.key});
@@ -11,20 +14,23 @@ class SignUpPage extends StatefulWidget{
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
+
 class _SignUpPageState extends State<SignUpPage> {
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController numberController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
+  var nameController = TextEditingController();
+  var emailController = TextEditingController();
+  var numberController = TextEditingController();
+  var passwordController = TextEditingController();
+  var confirmPasswordController = TextEditingController();
+
+  AuthController controller = Get.find<AuthController>();
 
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black38,
+      backgroundColor: Color(0xFFE3F2FD),
       body: Form(
         key: formkey,
         child: Padding(
@@ -38,7 +44,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 Text("Create Account", style: TextStyle(color:Colors.white,fontSize: 34, fontWeight: FontWeight.bold)),
                 SizedBox(height: 11),
 
-                ///Name
+                ///Name field
                 TextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -177,12 +183,41 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                 SizedBox(height: 11),
 
-                ///
-                SizedBox(
-                  width:double.infinity,
-                    child: ElevatedButton(onPressed: (){
-                      GoRouter.of(context).pushNamed(MyAppConstants.loginRoute);
-                    }, child: Text("Sign Up"))),
+                //for error message
+                Obx(() { return controller.signupError.value.isNotEmpty
+                    ? Text(controller.signupError.value, style: TextStyle(color: Colors.red, fontWeight: FontWeight.w600))
+                    : SizedBox();
+                }),
+                SizedBox(height: 8),
+
+                ///Signup Button
+                Obx(() => SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: controller.isSignupLoading.value
+                        ? null
+                        : () {
+                      if (formkey.currentState!.validate()) {
+                        controller.signupUser(
+                          name: nameController.text.trim(),
+                          email: emailController.text.trim(),
+                          mobNo: numberController.text.trim(),
+                          password: passwordController.text.trim(),
+                          onResult: (success) {
+                            if (success) {
+                              GoRouter.of(context).goNamed(MyAppConstants.loginRoute);
+                            }
+                          },
+                        );
+                      }
+                    },
+                    child: controller.isSignupLoading.value
+                        ? CircularProgressIndicator(color: Colors.white)
+                        : Text("Sign Up"),
+                  ),
+                )),
+
+                SizedBox(height: 11),
 
                 ///Text Button
                 TextButton(
